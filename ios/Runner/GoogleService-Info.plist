@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCzuTsP2peNkNu1kzGjbNGbPgoeMyxlL0I</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1034699560608</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.matsuGtd.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>matsu-gtd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>matsu-gtd.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1034699560608:ios:1db2bad83e68ab9470dbc5</string>
+</dict>
+</plist>
