@@ -5,9 +5,11 @@
 import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:matsu_gtd/firebase_auth.dart';
 
 import 'firebase_options.dart';
 import 'tabs_page.dart';
@@ -17,6 +19,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
   runApp(const MyApp());
 }
 
@@ -321,6 +330,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: <Widget>[
+            FilledButton(
+                onPressed: () {
+                  signInWithGoogle();
+                },
+                child: Text('login')),
             MaterialButton(
               onPressed: _sendAnalyticsEvent,
               child: const Text('Test logEvent'),
