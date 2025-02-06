@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,31 +49,25 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyADvR9H9sgzoJhns-F3VL_HkVEQKsPdvtc',
-    appId: '1:1034699560608:web:6d0c7cf18470405970dbc5',
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCzuTsP2peNkNu1kzGjbNGbPgoeMyxlL0I',
+    appId: '1:1034699560608:ios:a193c680c15b2a0370dbc5',
     messagingSenderId: '1034699560608',
     projectId: 'matsu-gtd',
-    authDomain: 'matsu-gtd.firebaseapp.com',
     storageBucket: 'matsu-gtd.firebasestorage.app',
+    iosClientId:
+        '1034699560608-ca3f8fc2ba61ivug5lutj2fnhiev5ltg.apps.googleusercontent.com',
+    iosBundleId: 'com.example.matsuGtd',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCzuTsP2peNkNu1kzGjbNGbPgoeMyxlL0I',
-    appId: '1:1034699560608:ios:51fd29b891ef483770dbc5',
+    appId: '1:1034699560608:ios:c0e5c724b19afdfe70dbc5',
     messagingSenderId: '1034699560608',
     projectId: 'matsu-gtd',
     storageBucket: 'matsu-gtd.firebasestorage.app',
+    iosClientId:
+        '1034699560608-9p1qa82hh2oa9jas46crjca0ek2d554p.apps.googleusercontent.com',
     iosBundleId: 'studio.pine-app.matsuGtd.matsuGtd',
   );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCzuTsP2peNkNu1kzGjbNGbPgoeMyxlL0I',
-    appId: '1:1034699560608:ios:1db2bad83e68ab9470dbc5',
-    messagingSenderId: '1034699560608',
-    projectId: 'matsu-gtd',
-    storageBucket: 'matsu-gtd.firebasestorage.app',
-    iosBundleId: 'com.example.matsuGtd.RunnerTests',
-  );
-
 }

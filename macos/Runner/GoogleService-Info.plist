@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1034699560608-c00fjumltfmcjfh5aa0vmov3fe5pakau.apps.googleusercontent.com</string>
+	<string>1034699560608-9p1qa82hh2oa9jas46crjca0ek2d554p.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1034699560608-c00fjumltfmcjfh5aa0vmov3fe5pakau</string>
+	<string>com.googleusercontent.apps.1034699560608-9p1qa82hh2oa9jas46crjca0ek2d554p</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCzuTsP2peNkNu1kzGjbNGbPgoeMyxlL0I</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>studio.pine-app.matsuGtd.mac</string>
+	<string>studio.pine-app.matsuGtd.matsuGtd</string>
 	<key>PROJECT_ID</key>
 	<string>matsu-gtd</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1034699560608:ios:8ea89ff00a5e7d3470dbc5</string>
+	<string>1:1034699560608:ios:c0e5c724b19afdfe70dbc5</string>
 </dict>
 </plist>
