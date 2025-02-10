@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -66,6 +67,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final db = FirebaseFirestore.instance;
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -78,6 +80,21 @@ class MyHomePage extends StatelessWidget {
                   signInWithGoogle();
                 },
                 child: Text('login')),
+            FilledButton(
+              onPressed: () {
+                // Create a new user with a first and last name
+                final user = <String, dynamic>{
+                  "first": "Ada",
+                  "last": "Lovelace",
+                  "born": 1816
+                };
+
+                // Add a new document with a generated ID
+                db.collection("users").add(user).then((DocumentReference doc) =>
+                    print('DocumentSnapshot added with ID: ${doc.id}'));
+              },
+              child: Text('add data'),
+            ),
           ],
         ),
       ),
