@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:matsu_gtd/firebase_auth.dart';
+import 'package:matsu_gtd/router.dart';
 
 import 'firebase_options.dart';
 
@@ -38,17 +39,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Firebase Analytics Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      navigatorObservers: <NavigatorObserver>[observer],
-      home: MyHomePage(
-        title: 'Firebase Analytics Demo',
-        analytics: analytics,
-        observer: observer,
-      ),
+      // navigatorObservers: <NavigatorObserver>[observer],
+      routerConfig: router,
     );
   }
 }
