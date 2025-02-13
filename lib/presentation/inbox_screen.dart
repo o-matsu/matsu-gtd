@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:matsu_gtd/core/utils/scaffold.dart';
+import 'package:matsu_gtd/model/task.dart';
 
 class InboxScreen extends StatelessWidget {
   const InboxScreen({super.key});
@@ -9,7 +10,13 @@ class InboxScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
-    final tasks = db.collection('tasks').snapshots();
+    final tasks = db
+        .collection('tasks')
+        .withConverter(
+          fromFirestore: Task.fromFirebase,
+          toFirestore: (Task task, _) => task.toFirestore,
+        )
+        .snapshots();
     return Scaffold(
       appBar: AppBar(
         title: Text('Inbox'),
@@ -29,16 +36,18 @@ class InboxScreen extends StatelessWidget {
             children: snapshot.data!.docs
                 .map((DocumentSnapshot document) {
                   // TODO： freezedで型定義
-                  Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
+                  // Map<String, dynamic> data =
+                  //     document.data()! as Map<String, dynamic>;
+                  final data = document.data() as Task;
 
                   /// TODO: スライドで操作
                   /// https://pub.dev/packages/flutter_slidable
 
                   return ListTile(
-                    title: Text(data['title']),
-                    subtitle: Text(
-                        (data['createdAt'] as Timestamp).toDate().toString()),
+                    title: Text(data.title),
+                    subtitle: data.createdAt != null
+                        ? Text(data.createdAt.toString())
+                        : null,
                   );
                 })
                 .toList()
@@ -58,14 +67,15 @@ class InboxScreen extends StatelessWidget {
                     onFieldSubmitted: (value) {
                       debugPrint(value);
                       // Create a new user with a first and last name
-                      final task = <String, dynamic>{
-                        "title": value,
-                        "createdAt": FieldValue.serverTimestamp(),
-                      };
+                      final task = Task(title: value);
 
                       // Add a new document with a generated ID
                       db
                           .collection("tasks")
+                          .withConverter(
+                            fromFirestore: Task.fromFirebase,
+                            toFirestore: (Task task, _) => task.toFirestore,
+                          )
                           .add(task)
                           .then((DocumentReference doc) {
                         scaffold.currentState?.showSnackBar(

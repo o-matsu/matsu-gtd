@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:matsu_gtd/features/inbox/inbox_screen.dart';
+import 'package:matsu_gtd/presentation/inbox_screen.dart';
 
 part 'router.g.dart';
 
