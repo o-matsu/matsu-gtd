@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Firebase Analytics Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorSchemeSeed: Colors.blue,
+        // primarySwatch: Colors.blue,
       ),
       // navigatorObservers: <NavigatorObserver>[observer],
       routerConfig: router,
