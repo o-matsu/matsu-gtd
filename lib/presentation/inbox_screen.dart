@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:matsu_gtd/controller/auth_controller.dart';
 import 'package:matsu_gtd/core/utils/scaffold.dart';
 import 'package:matsu_gtd/model/task.dart';
 
-class InboxScreen extends StatelessWidget {
+class InboxScreen extends ConsumerWidget {
   const InboxScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final db = FirebaseFirestore.instance;
     final tasks = db
         .collection('tasks')
@@ -20,6 +22,15 @@ class InboxScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Inbox'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              final auth = ref.read(authControllerProvider.notifier);
+              auth.signInWithGoogle();
+            },
+            icon: Icon(Icons.account_circle),
+          ),
+        ],
       ),
       body: StreamBuilder(
         stream: tasks,
