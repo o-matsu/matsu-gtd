@@ -102,12 +102,16 @@ class InboxScreen extends StatelessWidget {
             label: 'Inbox',
           ),
           NavigationDestination(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.task_alt),
             label: 'ToDo',
           ),
           NavigationDestination(
-            icon: Icon(Icons.tab),
+            icon: Icon(Icons.folder_open),
             label: 'Projects',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.inventory_2_outlined),
+            label: 'Archive',
           ),
         ],
       ),
