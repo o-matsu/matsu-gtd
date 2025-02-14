@@ -24,10 +24,15 @@ class Task with _$Task {
     _,
   ) {
     final data = snapshot.data();
+    final pending = snapshot.metadata.hasPendingWrites;
     return Task(
       title: data?['title'],
-      updatedAt: (data?['updatedAt'] as Timestamp?)?.toDate(),
-      createdAt: (data?['createdAt'] as Timestamp?)?.toDate(),
+      updatedAt: pending
+          ? DateTime.now()
+          : (data?['updatedAt'] as Timestamp?)?.toDate(),
+      createdAt: pending
+          ? DateTime.now()
+          : (data?['createdAt'] as Timestamp?)?.toDate(),
     );
   }
 
