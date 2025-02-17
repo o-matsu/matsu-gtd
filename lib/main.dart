@@ -42,11 +42,11 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({
-    Key? key,
+    super.key,
     required this.title,
     required this.analytics,
     required this.observer,
-  }) : super(key: key);
+  });
 
   final String title;
   final FirebaseAnalytics analytics;

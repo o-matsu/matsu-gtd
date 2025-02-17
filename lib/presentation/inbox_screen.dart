@@ -100,27 +100,7 @@ class InboxScreen extends ConsumerWidget {
         },
         child: Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: NavigationBar(
-        destinations: [
-          NavigationDestination(
-            icon: Icon(Icons.inbox),
-            label: 'Inbox',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.task_alt),
-            label: 'ToDo',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.folder_open),
-            label: 'Projects',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.inventory_2_outlined),
-            label: 'Archive',
-          ),
-        ],
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

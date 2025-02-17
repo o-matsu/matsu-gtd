@@ -7,13 +7,28 @@ part of 'router.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $inboxRoute,
+      $appShellRouteData,
     ];
 
-RouteBase get $inboxRoute => GoRouteData.$route(
-      path: '/inbox',
-      factory: $InboxRouteExtension._fromState,
+RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
+      factory: $AppShellRouteDataExtension._fromState,
+      branches: [
+        StatefulShellBranchData.$branch(
+          navigatorKey: InboxBranch.$navigatorKey,
+          routes: [
+            GoRouteData.$route(
+              path: '/inbox',
+              factory: $InboxRouteExtension._fromState,
+            ),
+          ],
+        ),
+      ],
     );
+
+extension $AppShellRouteDataExtension on AppShellRouteData {
+  static AppShellRouteData _fromState(GoRouterState state) =>
+      const AppShellRouteData();
+}
 
 extension $InboxRouteExtension on InboxRoute {
   static InboxRoute _fromState(GoRouterState state) => const InboxRoute();
