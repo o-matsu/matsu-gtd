@@ -20,18 +20,6 @@ class InboxScreen extends ConsumerWidget {
         )
         .snapshots();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Inbox'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              final auth = ref.read(authControllerProvider.notifier);
-              auth.signInWithGoogle();
-            },
-            icon: Icon(Icons.account_circle),
-          ),
-        ],
-      ),
       body: StreamBuilder(
         stream: tasks,
         builder: (context, snapshot) {

@@ -14,6 +14,7 @@ final inboxNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'inbox');
         routes: [
           TypedGoRoute<InboxRoute>(
             path: '/inbox',
+            name: 'Inbox',
           ),
         ],
       ),
@@ -29,7 +30,8 @@ class AppShellRouteData extends StatefulShellRouteData {
     GoRouterState state,
     StatefulNavigationShell navigationShell,
   ) {
-    return CommonNavigationBar(
+    return CommonLayout(
+      titleText: state.topRoute?.name,
       navigationShell: navigationShell,
     );
   }

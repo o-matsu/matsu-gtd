@@ -18,6 +18,7 @@ RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/inbox',
+              name: 'Inbox',
               factory: $InboxRouteExtension._fromState,
             ),
           ],
