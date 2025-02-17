@@ -18,8 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Task {
   String get title => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
-  bool get isProject => throw _privateConstructorUsedError;
-  List<String> get children => throw _privateConstructorUsedError;
   DateTime? get startedAt => throw _privateConstructorUsedError;
   DateTime? get finishedAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -39,8 +37,6 @@ abstract class $TaskCopyWith<$Res> {
   $Res call(
       {String title,
       Status status,
-      bool isProject,
-      List<String> children,
       DateTime? startedAt,
       DateTime? finishedAt,
       DateTime? updatedAt,
@@ -64,8 +60,6 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   $Res call({
     Object? title = null,
     Object? status = null,
-    Object? isProject = null,
-    Object? children = null,
     Object? startedAt = freezed,
     Object? finishedAt = freezed,
     Object? updatedAt = freezed,
@@ -80,14 +74,6 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      isProject: null == isProject
-          ? _value.isProject
-          : isProject // ignore: cast_nullable_to_non_nullable
-              as bool,
-      children: null == children
-          ? _value.children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       startedAt: freezed == startedAt
           ? _value.startedAt
           : startedAt // ignore: cast_nullable_to_non_nullable
@@ -118,8 +104,6 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
   $Res call(
       {String title,
       Status status,
-      bool isProject,
-      List<String> children,
       DateTime? startedAt,
       DateTime? finishedAt,
       DateTime? updatedAt,
@@ -140,8 +124,6 @@ class __$$TaskImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? status = null,
-    Object? isProject = null,
-    Object? children = null,
     Object? startedAt = freezed,
     Object? finishedAt = freezed,
     Object? updatedAt = freezed,
@@ -156,14 +138,6 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      isProject: null == isProject
-          ? _value.isProject
-          : isProject // ignore: cast_nullable_to_non_nullable
-              as bool,
-      children: null == children
-          ? _value._children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       startedAt: freezed == startedAt
           ? _value.startedAt
           : startedAt // ignore: cast_nullable_to_non_nullable
@@ -190,32 +164,17 @@ class _$TaskImpl extends _Task {
   const _$TaskImpl(
       {required this.title,
       this.status = Status.inbox,
-      this.isProject = false,
-      final List<String> children = const [],
       this.startedAt,
       this.finishedAt,
       this.updatedAt,
       this.createdAt})
-      : _children = children,
-        super._();
+      : super._();
 
   @override
   final String title;
   @override
   @JsonKey()
   final Status status;
-  @override
-  @JsonKey()
-  final bool isProject;
-  final List<String> _children;
-  @override
-  @JsonKey()
-  List<String> get children {
-    if (_children is EqualUnmodifiableListView) return _children;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_children);
-  }
-
   @override
   final DateTime? startedAt;
   @override
@@ -227,7 +186,7 @@ class _$TaskImpl extends _Task {
 
   @override
   String toString() {
-    return 'Task(title: $title, status: $status, isProject: $isProject, children: $children, startedAt: $startedAt, finishedAt: $finishedAt, updatedAt: $updatedAt, createdAt: $createdAt)';
+    return 'Task(title: $title, status: $status, startedAt: $startedAt, finishedAt: $finishedAt, updatedAt: $updatedAt, createdAt: $createdAt)';
   }
 
   @override
@@ -237,9 +196,6 @@ class _$TaskImpl extends _Task {
             other is _$TaskImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.isProject, isProject) ||
-                other.isProject == isProject) &&
-            const DeepCollectionEquality().equals(other._children, _children) &&
             (identical(other.startedAt, startedAt) ||
                 other.startedAt == startedAt) &&
             (identical(other.finishedAt, finishedAt) ||
@@ -252,15 +208,7 @@ class _$TaskImpl extends _Task {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      title,
-      status,
-      isProject,
-      const DeepCollectionEquality().hash(_children),
-      startedAt,
-      finishedAt,
-      updatedAt,
-      createdAt);
+      runtimeType, title, status, startedAt, finishedAt, updatedAt, createdAt);
 
   /// Create a copy of Task
   /// with the given fields replaced by the non-null parameter values.
@@ -275,8 +223,6 @@ abstract class _Task extends Task {
   const factory _Task(
       {required final String title,
       final Status status,
-      final bool isProject,
-      final List<String> children,
       final DateTime? startedAt,
       final DateTime? finishedAt,
       final DateTime? updatedAt,
@@ -287,10 +233,6 @@ abstract class _Task extends Task {
   String get title;
   @override
   Status get status;
-  @override
-  bool get isProject;
-  @override
-  List<String> get children;
   @override
   DateTime? get startedAt;
   @override

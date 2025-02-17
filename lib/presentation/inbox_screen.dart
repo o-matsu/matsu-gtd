@@ -46,9 +46,6 @@ class InboxScreen extends ConsumerWidget {
           return ListView(
             children: snapshot.data!.docs
                 .map((DocumentSnapshot document) {
-                  // TODO： freezedで型定義
-                  // Map<String, dynamic> data =
-                  //     document.data()! as Map<String, dynamic>;
                   final data = document.data() as Task;
 
                   /// TODO: スライドで操作
@@ -77,10 +74,8 @@ class InboxScreen extends ConsumerWidget {
                     autofocus: true,
                     onFieldSubmitted: (value) {
                       debugPrint(value);
-                      // Create a new user with a first and last name
                       final task = Task(title: value);
 
-                      // Add a new document with a generated ID
                       db
                           .collection("tasks")
                           .withConverter(

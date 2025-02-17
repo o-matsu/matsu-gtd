@@ -11,8 +11,6 @@ class Task with _$Task {
   const factory Task({
     required String title,
     @Default(Status.inbox) Status status,
-    @Default(false) bool isProject,
-    @Default([]) List<String> children,
     DateTime? startedAt,
     DateTime? finishedAt,
     DateTime? updatedAt,
