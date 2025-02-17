@@ -10,7 +10,6 @@ class FirebaseAuthenticationRepository {
   FirebaseAuthenticationRepository(this._firebaseAuth);
 
   final FirebaseAuth _firebaseAuth;
-  // .. add other functions here
   User? get currentUser => _firebaseAuth.currentUser;
   Stream<User?> authStateChanges() {
     return _firebaseAuth.authStateChanges();

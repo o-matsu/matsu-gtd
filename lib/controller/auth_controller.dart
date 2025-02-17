@@ -1,5 +1,5 @@
 import 'package:matsu_gtd/controller/loading_state.dart';
-import 'package:matsu_gtd/core/firebase_auth_repository.dart';
+import 'package:matsu_gtd/data/firebase_auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_controller.g.dart';
