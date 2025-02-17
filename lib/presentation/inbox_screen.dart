@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:matsu_gtd/controller/auth_controller.dart';
 import 'package:matsu_gtd/core/utils/scaffold.dart';
 import 'package:matsu_gtd/model/task.dart';
 
@@ -35,15 +35,30 @@ class InboxScreen extends ConsumerWidget {
             children: snapshot.data!.docs
                 .map((DocumentSnapshot document) {
                   final data = document.data() as Task;
-
-                  /// TODO: スライドで操作
-                  /// https://pub.dev/packages/flutter_slidable
-
-                  return ListTile(
-                    title: Text(data.title),
-                    subtitle: data.createdAt != null
-                        ? Text(data.createdAt.toString())
-                        : null,
+                  return Slidable(
+                    key: ValueKey(data.title),
+                    startActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      dismissible: DismissiblePane(onDismissed: () {
+                        print('go to next action');
+                      }),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) {},
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor: Colors.white,
+                          icon: Icons.check,
+                          label: 'Next Action',
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      title: TextFormField(initialValue: data.title),
+                      subtitle: data.createdAt != null
+                          ? Text(data.createdAt.toString())
+                          : null,
+                    ),
                   );
                 })
                 .toList()
