@@ -52,8 +52,51 @@ class InboxScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      // extentRatio: 0.2,
+                      dismissible: DismissiblePane(
+                        onDismissed: () {
+                          taskProvider.delete(id: document.id);
+                        },
+                      ),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) {},
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          foregroundColor: Colors.white,
+                          icon: Icons.folder_open,
+                          label: 'Project',
+                        ),
+                        SlidableAction(
+                          onPressed: (context) {},
+                          backgroundColor:
+                              Theme.of(context).colorScheme.tertiary,
+                          foregroundColor: Colors.white,
+                          icon: Icons.inventory_2_outlined,
+                          label: 'Archive',
+                        ),
+                        SlidableAction(
+                          onPressed: (context) =>
+                              taskProvider.delete(id: document.id),
+                          backgroundColor: Theme.of(context).colorScheme.error,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Delete',
+                        ),
+                      ],
+                    ),
                     child: ListTile(
-                      title: TextFormField(initialValue: data.title),
+                      title: TextFormField(
+                        initialValue: data.title,
+                        onChanged: (value) {
+                          taskProvider.updateTitle(
+                            id: document.id,
+                            title: value,
+                          );
+                        },
+                      ),
                       subtitle: data.createdAt != null
                           ? Text(data.createdAt.toString())
                           : null,
