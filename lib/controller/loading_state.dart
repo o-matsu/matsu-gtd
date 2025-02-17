@@ -1,5 +1,5 @@
-class AuthLoadingState {
-  const AuthLoadingState(this.state, this.error);
+class LoadingState {
+  const LoadingState(this.state, this.error);
 
   final LoadingStateEnum state;
   final Exception? error;

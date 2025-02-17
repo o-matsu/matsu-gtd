@@ -4,10 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'firebase_auth_repository.g.dart';
+part 'auth_repository.g.dart';
 
-class FirebaseAuthenticationRepository {
-  FirebaseAuthenticationRepository(this._firebaseAuth);
+class AuthRepository {
+  AuthRepository(this._firebaseAuth);
 
   final FirebaseAuth _firebaseAuth;
   User? get currentUser => _firebaseAuth.currentUser;
@@ -32,9 +32,9 @@ class FirebaseAuthenticationRepository {
 }
 
 @Riverpod(keepAlive: true)
-FirebaseAuthenticationRepository authRepository(Ref ref) {
+AuthRepository authRepository(Ref ref) {
   final auth = ref.watch(firebaseAuthProvider);
-  return FirebaseAuthenticationRepository(auth);
+  return AuthRepository(auth);
 }
 
 @Riverpod(keepAlive: true)

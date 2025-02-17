@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/core/utils/scaffold.dart';
+import 'package:matsu_gtd/data/task_repository.dart';
 import 'package:matsu_gtd/model/task.dart';
 
 class InboxScreen extends ConsumerWidget {
@@ -11,17 +12,11 @@ class InboxScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final db = FirebaseFirestore.instance;
-    final tasks = db
-        .collection('tasks')
-        .withConverter(
-          fromFirestore: Task.fromFirebase,
-          toFirestore: (Task task, _) => task.toFirestore,
-        )
-        .snapshots();
+    final taskProvider = ref.read(taskRepositoryProvider);
+
     return Scaffold(
       body: StreamBuilder(
-        stream: tasks,
+        stream: taskProvider.snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went wrong');
@@ -36,12 +31,16 @@ class InboxScreen extends ConsumerWidget {
                 .map((DocumentSnapshot document) {
                   final data = document.data() as Task;
                   return Slidable(
-                    key: ValueKey(data.title),
+                    key: ValueKey(document.id),
                     startActionPane: ActionPane(
                       motion: const ScrollMotion(),
-                      dismissible: DismissiblePane(onDismissed: () {
-                        print('go to next action');
-                      }),
+                      extentRatio: 0.2,
+                      dismissible: DismissiblePane(
+                        dismissThreshold: 0.1,
+                        onDismissed: () {
+                          print('go to next action');
+                        },
+                      ),
                       children: [
                         SlidableAction(
                           onPressed: (context) {},
@@ -75,27 +74,18 @@ class InboxScreen extends ConsumerWidget {
                   padding: EdgeInsets.all(8.0),
                   child: TextFormField(
                     autofocus: true,
-                    onFieldSubmitted: (value) {
+                    onFieldSubmitted: (value) async {
                       debugPrint(value);
                       final task = Task(title: value);
-
-                      db
-                          .collection("tasks")
-                          .withConverter(
-                            fromFirestore: Task.fromFirebase,
-                            toFirestore: (Task task, _) => task.toFirestore,
-                          )
-                          .add(task)
-                          .then((DocumentReference doc) {
-                        scaffold.currentState?.showSnackBar(
-                          SnackBar(
-                            content: Text('Task added.'),
-                            showCloseIcon: true,
-                          ),
-                        );
-                        if (!context.mounted) return;
-                        context.pop();
-                      });
+                      await taskProvider.add(task);
+                      scaffold.currentState?.showSnackBar(
+                        SnackBar(
+                          content: Text('Task added.'),
+                          showCloseIcon: true,
+                        ),
+                      );
+                      if (!context.mounted) return;
+                      context.pop();
                     },
                   ),
                 );
