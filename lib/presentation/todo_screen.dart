@@ -6,16 +6,16 @@ import 'package:matsu_gtd/model/status.dart';
 import 'package:matsu_gtd/model/task.dart';
 import 'package:matsu_gtd/presentation/widgets/layout.dart';
 
-class InboxScreen extends ConsumerWidget {
-  const InboxScreen({super.key});
+class ToDoScreen extends ConsumerWidget {
+  const ToDoScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final taskProvider = ref.read(taskRepositoryProvider);
 
     return CommonLayout(
-      titleText: 'Inbox',
-      stream: taskProvider.snapshots(Status.inbox),
+      titleText: 'ToDo',
+      stream: taskProvider.snapshots(Status.actionable),
       builder: (context, docs) {
         return ListView.separated(
           padding: EdgeInsets.zero,
@@ -30,36 +30,51 @@ class InboxScreen extends ConsumerWidget {
                 extentRatio: 0.2,
                 dismissible: DismissiblePane(
                   dismissThreshold: 0.1,
-                  onDismissed: () => taskProvider.updateStatus(task,
-                      status: Status.actionable),
+                  onDismissed: () =>
+                      taskProvider.updateStatus(task, status: Status.wip),
                 ),
                 children: [
                   SlidableAction(
-                    onPressed: (context) => taskProvider.updateStatus(task,
-                        status: Status.actionable),
+                    onPressed: (context) =>
+                        taskProvider.updateStatus(task, status: Status.wip),
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
                     icon: Icons.check,
-                    label: 'Actionable',
+                    label: 'Action',
                   ),
                 ],
               ),
               endActionPane: ActionPane(
                 motion: const ScrollMotion(),
-                extentRatio: 0.2,
+                extentRatio: 0.7,
                 dismissible: DismissiblePane(
-                  dismissThreshold: 0.1,
-                  onDismissed: () => taskProvider.updateStatus(task,
-                      status: Status.nonActionable),
+                  onDismissed: () =>
+                      taskProvider.updateStatus(task, status: Status.waiting),
                 ),
                 children: [
                   SlidableAction(
                     onPressed: (context) => taskProvider.updateStatus(task,
                         status: Status.actionable),
+                    backgroundColor: Theme.of(context).colorScheme.tertiary,
+                    foregroundColor: Colors.white,
+                    icon: Icons.calendar_today_rounded,
+                    label: 'Calendar',
+                  ),
+                  SlidableAction(
+                    onPressed: (context) => taskProvider.updateStatus(task,
+                        status: Status.nonActionable),
                     backgroundColor: Theme.of(context).colorScheme.error,
                     foregroundColor: Colors.white,
                     icon: Icons.close,
                     label: 'Non Actionable',
+                  ),
+                  SlidableAction(
+                    onPressed: (context) =>
+                        taskProvider.updateStatus(task, status: Status.waiting),
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    foregroundColor: Colors.white,
+                    icon: Icons.hourglass_top_outlined,
+                    label: 'Waiting',
                   ),
                 ],
               ),
@@ -68,24 +83,7 @@ class InboxScreen extends ConsumerWidget {
                   horizontal: 24,
                   vertical: 8,
                 ),
-                title: TextFormField(
-                  key: Key(task.id!),
-                  autofocus: task.title.isEmpty,
-                  initialValue: task.title,
-                  onChanged: (value) {
-                    taskProvider.updateTitle(
-                      task,
-                      title: value,
-                    );
-                  },
-                  onFieldSubmitted: (value) {
-                    if (value.isEmpty) {
-                      taskProvider.delete(id: task.id!);
-                    } else {
-                      taskProvider.add(Task());
-                    }
-                  },
-                ),
+                title: Text(task.title),
               ),
             );
           },

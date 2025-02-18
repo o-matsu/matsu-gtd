@@ -9,7 +9,8 @@ class Task with _$Task {
   const Task._();
 
   const factory Task({
-    required String title,
+    String? id,
+    @Default('') String title,
     @Default(Status.inbox) Status status,
     DateTime? startedAt,
     DateTime? finishedAt,
@@ -24,6 +25,7 @@ class Task with _$Task {
     final data = snapshot.data();
     final pending = snapshot.metadata.hasPendingWrites;
     return Task(
+      id: snapshot.id,
       title: data?['title'],
       updatedAt: pending
           ? DateTime.now()
@@ -36,7 +38,10 @@ class Task with _$Task {
 
   Map<String, dynamic> get toFirestore => {
         'title': title,
+        'status': status.name,
         'updatedAt': FieldValue.serverTimestamp(),
-        'createdAt': createdAt as Timestamp? ?? FieldValue.serverTimestamp(),
+        'createdAt': createdAt != null
+            ? Timestamp.fromDate(createdAt!)
+            : FieldValue.serverTimestamp(),
       };
 }

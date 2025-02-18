@@ -1,10 +1,11 @@
 enum Status {
   inbox,
-  toDo,
+  actionable,
   wip,
   done,
-  nonActionable,
   waiting,
+  scheduled,
+  nonActionable,
   reference,
   maybe,
   ;

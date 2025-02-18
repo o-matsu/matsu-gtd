@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Task {
+  String? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
   DateTime? get startedAt => throw _privateConstructorUsedError;
@@ -35,7 +36,8 @@ abstract class $TaskCopyWith<$Res> {
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
   $Res call(
-      {String title,
+      {String? id,
+      String title,
       Status status,
       DateTime? startedAt,
       DateTime? finishedAt,
@@ -58,6 +60,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = null,
     Object? status = null,
     Object? startedAt = freezed,
@@ -66,6 +69,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -102,7 +109,8 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String title,
+      {String? id,
+      String title,
       Status status,
       DateTime? startedAt,
       DateTime? finishedAt,
@@ -122,6 +130,7 @@ class __$$TaskImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = null,
     Object? status = null,
     Object? startedAt = freezed,
@@ -130,6 +139,10 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
   }) {
     return _then(_$TaskImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -162,7 +175,8 @@ class __$$TaskImplCopyWithImpl<$Res>
 
 class _$TaskImpl extends _Task {
   const _$TaskImpl(
-      {required this.title,
+      {this.id,
+      this.title = '',
       this.status = Status.inbox,
       this.startedAt,
       this.finishedAt,
@@ -171,6 +185,9 @@ class _$TaskImpl extends _Task {
       : super._();
 
   @override
+  final String? id;
+  @override
+  @JsonKey()
   final String title;
   @override
   @JsonKey()
@@ -186,7 +203,7 @@ class _$TaskImpl extends _Task {
 
   @override
   String toString() {
-    return 'Task(title: $title, status: $status, startedAt: $startedAt, finishedAt: $finishedAt, updatedAt: $updatedAt, createdAt: $createdAt)';
+    return 'Task(id: $id, title: $title, status: $status, startedAt: $startedAt, finishedAt: $finishedAt, updatedAt: $updatedAt, createdAt: $createdAt)';
   }
 
   @override
@@ -194,6 +211,7 @@ class _$TaskImpl extends _Task {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TaskImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.startedAt, startedAt) ||
@@ -207,8 +225,8 @@ class _$TaskImpl extends _Task {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, title, status, startedAt, finishedAt, updatedAt, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, title, status, startedAt,
+      finishedAt, updatedAt, createdAt);
 
   /// Create a copy of Task
   /// with the given fields replaced by the non-null parameter values.
@@ -221,7 +239,8 @@ class _$TaskImpl extends _Task {
 
 abstract class _Task extends Task {
   const factory _Task(
-      {required final String title,
+      {final String? id,
+      final String title,
       final Status status,
       final DateTime? startedAt,
       final DateTime? finishedAt,
@@ -229,6 +248,8 @@ abstract class _Task extends Task {
       final DateTime? createdAt}) = _$TaskImpl;
   const _Task._() : super._();
 
+  @override
+  String? get id;
   @override
   String get title;
   @override

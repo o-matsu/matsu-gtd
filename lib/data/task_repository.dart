@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/core/firebase/auth_repository.dart';
 import 'package:matsu_gtd/core/firebase/firestore_repository.dart';
+import 'package:matsu_gtd/model/status.dart';
 import 'package:matsu_gtd/model/task.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -22,14 +23,23 @@ class TaskRepository {
   final User user;
   final CollectionReference<Task> _collection;
 
+  Query<Task> _whereStatus(Status status) =>
+      _collection.where("status", isEqualTo: status.name).orderBy('createdAt');
   DocumentReference<Task> _doc(String id) => _collection.doc(id);
 
-  Future<void> updateTitle({required String id, required String title}) =>
-      _doc(id).update({'title': title});
+  Future<void> updateTitle(Task task, {required String title}) =>
+      _doc(task.id!).set(task.copyWith(
+        title: title,
+      ));
+  Future<void> updateStatus(Task task, {required Status status}) =>
+      _doc(task.id!).set(task.copyWith(
+        status: status,
+      ));
 
   Future<void> delete({required String id}) => _doc(id).delete();
 
-  Stream<QuerySnapshot<Task>> snapshots() => _collection.snapshots();
+  Stream<QuerySnapshot<Task>> snapshots(Status status) =>
+      _whereStatus(status).snapshots();
 
   Future<DocumentReference<Task>> add(Task data) => _collection.add(data);
 }

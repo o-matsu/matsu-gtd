@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:matsu_gtd/presentation/inbox_screen.dart';
+import 'package:matsu_gtd/presentation/todo_screen.dart';
 import 'package:matsu_gtd/presentation/widgets/navigation_bar.dart';
 
 part 'router.g.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final inboxNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'inbox');
+final toDoNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'toDo');
 
 @TypedStatefulShellRoute<AppShellRouteData>(
-    branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
-      TypedStatefulShellBranch<InboxBranch>(
-        routes: [
-          TypedGoRoute<InboxRoute>(
-            path: '/inbox',
-            name: 'Inbox',
-          ),
-        ],
-      ),
-    ])
+  branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
+    TypedStatefulShellBranch<InboxBranch>(
+      routes: [
+        TypedGoRoute<InboxRoute>(
+          path: '/inbox',
+        ),
+      ],
+    ),
+    TypedStatefulShellBranch<ToDoBranch>(
+      routes: [
+        TypedGoRoute<ToDoRoute>(
+          path: '/toDo',
+        ),
+      ],
+    ),
+  ],
+)
 class AppShellRouteData extends StatefulShellRouteData {
   const AppShellRouteData();
 
@@ -30,8 +39,7 @@ class AppShellRouteData extends StatefulShellRouteData {
     GoRouterState state,
     StatefulNavigationShell navigationShell,
   ) {
-    return CommonLayout(
-      titleText: state.topRoute?.name,
+    return CommonNavigationBar(
       navigationShell: navigationShell,
     );
   }
@@ -48,6 +56,19 @@ class InboxRoute extends GoRouteData {
 
   @override
   Widget build(context, state) => InboxScreen();
+}
+
+class ToDoBranch extends StatefulShellBranchData {
+  const ToDoBranch();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = toDoNavigatorKey;
+}
+
+class ToDoRoute extends GoRouteData {
+  const ToDoRoute();
+
+  @override
+  Widget build(context, state) => ToDoScreen();
 }
 
 final router = GoRouter(

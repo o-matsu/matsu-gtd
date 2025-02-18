@@ -1,35 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:matsu_gtd/controller/auth_controller.dart';
+import 'package:matsu_gtd/data/task_repository.dart';
+import 'package:matsu_gtd/model/task.dart';
+import 'package:matsu_gtd/router.dart';
 
-class CommonLayout extends ConsumerWidget {
-  const CommonLayout({
+class CommonNavigationBar extends ConsumerWidget {
+  const CommonNavigationBar({
     super.key,
-    required this.titleText,
     required this.navigationShell,
   });
 
-  final String? titleText;
   final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final taskProvider = ref.read(taskRepositoryProvider);
+
     return Scaffold(
-      appBar: AppBar(
-        title: titleText != null ? Text(titleText!) : null,
-        actions: [
-          IconButton(
-            onPressed: () {
-              final auth = ref.read(authControllerProvider.notifier);
-              auth.signInWithGoogle();
-            },
-            icon: Icon(Icons.account_circle),
-          ),
-        ],
-      ),
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
+        selectedIndex: navigationShell.currentIndex,
         destinations: [
           NavigationDestination(
             icon: Icon(Icons.inbox),
@@ -48,7 +39,21 @@ class CommonLayout extends ConsumerWidget {
             label: 'Archive',
           ),
         ],
+        onDestinationSelected: (index) {
+          navigationShell.goBranch(
+            index,
+            initialLocation: index == navigationShell.currentIndex,
+          );
+        },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          InboxRoute().go(context);
+          taskProvider.add(Task());
+        },
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

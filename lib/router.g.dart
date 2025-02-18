@@ -18,8 +18,16 @@ RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/inbox',
-              name: 'Inbox',
               factory: $InboxRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          navigatorKey: ToDoBranch.$navigatorKey,
+          routes: [
+            GoRouteData.$route(
+              path: '/todo',
+              factory: $ToDoRouteExtension._fromState,
             ),
           ],
         ),
@@ -36,6 +44,23 @@ extension $InboxRouteExtension on InboxRoute {
 
   String get location => GoRouteData.$location(
         '/inbox',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ToDoRouteExtension on ToDoRoute {
+  static ToDoRoute _fromState(GoRouterState state) => const ToDoRoute();
+
+  String get location => GoRouteData.$location(
+        '/todo',
       );
 
   void go(BuildContext context) => context.go(location);
