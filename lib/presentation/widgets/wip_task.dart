@@ -29,7 +29,7 @@ class WipWatcher extends HookConsumerWidget {
                 // TODO: 直近wipになったもの以外は、actionableに戻す
               }
             }
-            final task = snapshot.data?.docs.first.data();
+            final task = snapshot.data?.docs.firstOrNull?.data();
             return task != null
                 ? Slidable(
                     startActionPane: ActionPane(
