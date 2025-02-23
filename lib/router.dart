@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:matsu_gtd/presentation/inbox_screen.dart';
+import 'package:matsu_gtd/presentation/projects_screen.dart';
 import 'package:matsu_gtd/presentation/todo_screen.dart';
 import 'package:matsu_gtd/presentation/widgets/navigation_bar.dart';
 
@@ -9,6 +10,7 @@ part 'router.g.dart';
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final inboxNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'inbox');
 final toDoNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'toDo');
+final projectsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'projects');
 
 @TypedStatefulShellRoute<AppShellRouteData>(
   branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
@@ -23,6 +25,13 @@ final toDoNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'toDo');
       routes: [
         TypedGoRoute<ToDoRoute>(
           path: '/toDo',
+        ),
+      ],
+    ),
+    TypedStatefulShellBranch<ProjectsBranch>(
+      routes: [
+        TypedGoRoute<ProjectsRoute>(
+          path: '/projects',
         ),
       ],
     ),
@@ -69,6 +78,19 @@ class ToDoRoute extends GoRouteData {
 
   @override
   Widget build(context, state) => ToDoScreen();
+}
+
+class ProjectsBranch extends StatefulShellBranchData {
+  const ProjectsBranch();
+
+  static final GlobalKey<NavigatorState> $navigatorKey = projectsNavigatorKey;
+}
+
+class ProjectsRoute extends GoRouteData {
+  const ProjectsRoute();
+
+  @override
+  Widget build(context, state) => ProjectsScreen();
 }
 
 final router = GoRouter(

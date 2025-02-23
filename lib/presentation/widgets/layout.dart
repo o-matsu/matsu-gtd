@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/controller/auth_controller.dart';
-import 'package:matsu_gtd/model/task.dart';
 import 'package:matsu_gtd/presentation/widgets/wip_task.dart';
 
-class CommonLayout extends ConsumerWidget {
+class CommonLayout<T> extends ConsumerWidget {
   const CommonLayout({
     super.key,
     required this.titleText,
@@ -14,9 +13,8 @@ class CommonLayout extends ConsumerWidget {
   });
 
   final String titleText;
-  final Stream<QuerySnapshot<Task>> stream;
-  final Widget Function(BuildContext, List<QueryDocumentSnapshot<Task>>)
-      builder;
+  final Stream<QuerySnapshot<T>> stream;
+  final Widget Function(BuildContext, List<QueryDocumentSnapshot<T>>) builder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

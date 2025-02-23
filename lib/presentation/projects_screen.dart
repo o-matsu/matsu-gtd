@@ -4,22 +4,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/data/project_repository.dart';
 import 'package:matsu_gtd/data/task_repository.dart';
 import 'package:matsu_gtd/model/project.dart';
-import 'package:matsu_gtd/model/status.dart';
-import 'package:matsu_gtd/model/task.dart';
 import 'package:matsu_gtd/presentation/widgets/layout.dart';
 import 'package:matsu_gtd/presentation/widgets/navigation_bar.dart';
 
-class ToDoScreen extends ConsumerWidget {
-  const ToDoScreen({super.key});
+class ProjectsScreen extends ConsumerWidget {
+  const ProjectsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final taskProvider = ref.read(taskRepositoryProvider);
     final projectProvider = ref.read(projectRepositoryProvider);
 
-    return CommonLayout<Task>(
+    return CommonLayout<Project>(
       titleText: NavigationItem.toDo.name,
-      stream: taskProvider.snapshots(Status.actionable),
+      stream: projectProvider.snapshots(),
       builder: (context, docs) {
         return ListView.separated(
           padding: EdgeInsets.zero,
@@ -34,13 +32,11 @@ class ToDoScreen extends ConsumerWidget {
                 extentRatio: 0.2,
                 dismissible: DismissiblePane(
                   dismissThreshold: 0.1,
-                  onDismissed: () =>
-                      taskProvider.updateStatus(task, status: Status.wip),
+                  onDismissed: () {},
                 ),
                 children: [
                   SlidableAction(
-                    onPressed: (context) =>
-                        taskProvider.updateStatus(task, status: Status.wip),
+                    onPressed: (context) {},
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
                     icon: Icons.check,
@@ -52,13 +48,11 @@ class ToDoScreen extends ConsumerWidget {
                 motion: const ScrollMotion(),
                 extentRatio: 0.7,
                 dismissible: DismissiblePane(
-                  onDismissed: () =>
-                      taskProvider.updateStatus(task, status: Status.waiting),
+                  onDismissed: () {},
                 ),
                 children: [
                   SlidableAction(
-                    onPressed: (context) => taskProvider.updateStatus(task,
-                        status: Status.nonActionable),
+                    onPressed: (context) {},
                     backgroundColor: Theme.of(context).colorScheme.error,
                     foregroundColor: Colors.white,
                     icon: Icons.close,
@@ -74,10 +68,7 @@ class ToDoScreen extends ConsumerWidget {
                     label: 'Calendar',
                   ),
                   SlidableAction(
-                    onPressed: (context) async {
-                      await projectProvider.add(Project.fromTask(task));
-                      taskProvider.delete(id: task.id!);
-                    },
+                    onPressed: (context) {},
                     backgroundColor:
                         Theme.of(context).colorScheme.secondaryFixedDim,
                     foregroundColor:
@@ -86,8 +77,7 @@ class ToDoScreen extends ConsumerWidget {
                     label: 'Project',
                   ),
                   SlidableAction(
-                    onPressed: (context) =>
-                        taskProvider.updateStatus(task, status: Status.waiting),
+                    onPressed: (context) {},
                     backgroundColor:
                         Theme.of(context).colorScheme.secondaryContainer,
                     foregroundColor:

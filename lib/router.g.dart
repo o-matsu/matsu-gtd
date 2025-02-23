@@ -31,6 +31,15 @@ RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
             ),
           ],
         ),
+        StatefulShellBranchData.$branch(
+          navigatorKey: ProjectsBranch.$navigatorKey,
+          routes: [
+            GoRouteData.$route(
+              path: '/projects',
+              factory: $ProjectsRouteExtension._fromState,
+            ),
+          ],
+        ),
       ],
     );
 
@@ -61,6 +70,23 @@ extension $ToDoRouteExtension on ToDoRoute {
 
   String get location => GoRouteData.$location(
         '/toDo',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ProjectsRouteExtension on ProjectsRoute {
+  static ProjectsRoute _fromState(GoRouterState state) => const ProjectsRoute();
+
+  String get location => GoRouteData.$location(
+        '/projects',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -15,7 +15,7 @@ class InboxScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final taskProvider = ref.read(taskRepositoryProvider);
 
-    return CommonLayout(
+    return CommonLayout<Task>(
       titleText: NavigationItem.inbox.name,
       stream: taskProvider.snapshots(Status.inbox),
       builder: (context, docs) {

@@ -25,7 +25,7 @@ class ProjectRepository {
   final FirebaseFirestore firestore;
   final CollectionReference<Project> _collection;
 
-  Query<Project> _ordered(Status status) => _collection
+  Query<Project> get _ordered => _collection
       .orderBy(
         'index',
       )
@@ -39,8 +39,7 @@ class ProjectRepository {
 
   Future<void> delete({required String id}) => _doc(id).delete();
 
-  Stream<QuerySnapshot<Project>> snapshots(Status status) =>
-      _ordered(status).snapshots();
+  Stream<QuerySnapshot<Project>> snapshots() => _ordered.snapshots();
 
   Future<DocumentReference<Project>> add(Project data) => _collection.add(data);
 

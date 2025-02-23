@@ -26,7 +26,7 @@ class Project with _$Project {
     return Project(
       id: snapshot.id,
       name: data?['name'],
-      children: data?['children'],
+      // children: data?['children'],
       updatedAt: pending
           ? DateTime.now()
           : (data?['updatedAt'] as Timestamp?)?.toDate(),
@@ -46,10 +46,7 @@ class Project with _$Project {
             : FieldValue.serverTimestamp(),
       };
 
-  factory Project.fromTask(
-    Task task,
-    _,
-  ) {
+  factory Project.fromTask(Task task) {
     return Project(
       name: task.name,
     );
