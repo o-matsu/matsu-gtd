@@ -3,8 +3,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/data/task_repository.dart';
 import 'package:matsu_gtd/model/status.dart';
-import 'package:matsu_gtd/model/task.dart';
 import 'package:matsu_gtd/presentation/widgets/layout.dart';
+import 'package:matsu_gtd/presentation/widgets/navigation_bar.dart';
 
 class ToDoScreen extends ConsumerWidget {
   const ToDoScreen({super.key});
@@ -14,7 +14,7 @@ class ToDoScreen extends ConsumerWidget {
     final taskProvider = ref.read(taskRepositoryProvider);
 
     return CommonLayout(
-      titleText: 'ToDo',
+      titleText: NavigationItem.toDo.name,
       stream: taskProvider.snapshots(Status.actionable),
       builder: (context, docs) {
         return ListView.separated(
@@ -54,14 +54,6 @@ class ToDoScreen extends ConsumerWidget {
                 children: [
                   SlidableAction(
                     onPressed: (context) => taskProvider.updateStatus(task,
-                        status: Status.actionable),
-                    backgroundColor: Theme.of(context).colorScheme.tertiary,
-                    foregroundColor: Colors.white,
-                    icon: Icons.calendar_today_rounded,
-                    label: 'Calendar',
-                  ),
-                  SlidableAction(
-                    onPressed: (context) => taskProvider.updateStatus(task,
                         status: Status.nonActionable),
                     backgroundColor: Theme.of(context).colorScheme.error,
                     foregroundColor: Colors.white,
@@ -69,10 +61,32 @@ class ToDoScreen extends ConsumerWidget {
                     label: 'Non Actionable',
                   ),
                   SlidableAction(
-                    onPressed: (context) =>
-                        taskProvider.updateStatus(task, status: Status.waiting),
+                    onPressed: (context) {
+                      // TODO: 日付入力モーダル
+                    },
                     backgroundColor: Theme.of(context).colorScheme.secondary,
                     foregroundColor: Colors.white,
+                    icon: Icons.calendar_today_rounded,
+                    label: 'Calendar',
+                  ),
+                  SlidableAction(
+                    onPressed: (context) {
+                      // TODO: Projectクラスに変換
+                    },
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryFixedDim,
+                    foregroundColor:
+                        Theme.of(context).colorScheme.onSecondaryFixedVariant,
+                    icon: Icons.folder_open,
+                    label: 'Project',
+                  ),
+                  SlidableAction(
+                    onPressed: (context) =>
+                        taskProvider.updateStatus(task, status: Status.waiting),
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    foregroundColor:
+                        Theme.of(context).colorScheme.onSecondaryContainer,
                     icon: Icons.hourglass_top_outlined,
                     label: 'Waiting',
                   ),

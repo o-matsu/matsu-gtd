@@ -5,6 +5,7 @@ import 'package:matsu_gtd/data/task_repository.dart';
 import 'package:matsu_gtd/model/status.dart';
 import 'package:matsu_gtd/model/task.dart';
 import 'package:matsu_gtd/presentation/widgets/layout.dart';
+import 'package:matsu_gtd/presentation/widgets/navigation_bar.dart';
 
 class InboxScreen extends ConsumerWidget {
   const InboxScreen({super.key});
@@ -14,7 +15,7 @@ class InboxScreen extends ConsumerWidget {
     final taskProvider = ref.read(taskRepositoryProvider);
 
     return CommonLayout(
-      titleText: 'Inbox',
+      titleText: NavigationItem.inbox.name,
       stream: taskProvider.snapshots(Status.inbox),
       builder: (context, docs) {
         return ListView.separated(
@@ -58,8 +59,8 @@ class InboxScreen extends ConsumerWidget {
                         status: Status.actionable),
                     backgroundColor: Theme.of(context).colorScheme.error,
                     foregroundColor: Colors.white,
-                    icon: Icons.close,
-                    label: 'Non Actionable',
+                    icon: Icons.inventory_2_outlined,
+                    label: 'Archive',
                   ),
                 ],
               ),

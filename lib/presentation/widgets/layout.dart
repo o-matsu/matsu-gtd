@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:matsu_gtd/controller/auth_controller.dart';
 import 'package:matsu_gtd/model/task.dart';
+import 'package:matsu_gtd/presentation/widgets/wip_task.dart';
 
 class CommonLayout extends ConsumerWidget {
   const CommonLayout({
@@ -18,6 +20,7 @@ class CommonLayout extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authProvider = ref.read(authControllerProvider.notifier);
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
@@ -29,24 +32,32 @@ class CommonLayout extends ConsumerWidget {
               ),
               expandedHeight: 200.0,
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              actions: [
+                IconButton(
+                  onPressed: () => authProvider.signInWithGoogle(),
+                  icon: Icon(Icons.account_circle),
+                ),
+              ],
             ),
           ];
         },
-        body: StreamBuilder(
-          stream: stream,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              debugPrint(snapshot.error.toString());
-              return const Text('Something went wrong');
-            }
+        body: WipWatcher(
+          child: StreamBuilder(
+            stream: stream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                debugPrint(snapshot.error.toString());
+                return const Text('Something went wrong');
+              }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text("Loading");
-            }
-            final docs = snapshot.data!.docs;
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text("Loading");
+              }
+              final docs = snapshot.data!.docs;
 
-            return builder(context, docs);
-          },
+              return builder(context, docs);
+            },
+          ),
         ),
       ),
     );
