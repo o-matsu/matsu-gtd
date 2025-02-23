@@ -32,9 +32,9 @@ class TaskRepository {
       .orderBy('createdAt');
   DocumentReference<Task> _doc(String id) => _collection.doc(id);
 
-  Future<void> updateTitle(Task task, {required String title}) =>
+  Future<void> updateName(Task task, {required String name}) =>
       _doc(task.id!).set(task.copyWith(
-        title: title,
+        name: name,
       ));
   Future<void> updateStatus(Task task, {required Status status}) =>
       _doc(task.id!).set(task.copyWith(

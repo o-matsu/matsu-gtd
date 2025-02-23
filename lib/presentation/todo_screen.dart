@@ -97,7 +97,7 @@ class ToDoScreen extends ConsumerWidget {
                   horizontal: 24,
                   vertical: 8,
                 ),
-                title: Text(task.title),
+                title: Text(task.name),
               ),
             );
           },

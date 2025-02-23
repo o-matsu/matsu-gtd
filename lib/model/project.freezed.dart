@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'task.dart';
+part of 'project.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,59 +15,53 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$Task {
+mixin _$Project {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  Status get status => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
-  DateTime? get startedAt => throw _privateConstructorUsedError;
-  DateTime? get finishedAt => throw _privateConstructorUsedError;
+  List<String> get children => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
-  /// Create a copy of Task
+  /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TaskCopyWith<Task> get copyWith => throw _privateConstructorUsedError;
+  $ProjectCopyWith<Project> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TaskCopyWith<$Res> {
-  factory $TaskCopyWith(Task value, $Res Function(Task) then) =
-      _$TaskCopyWithImpl<$Res, Task>;
+abstract class $ProjectCopyWith<$Res> {
+  factory $ProjectCopyWith(Project value, $Res Function(Project) then) =
+      _$ProjectCopyWithImpl<$Res, Project>;
   @useResult
   $Res call(
       {String? id,
       String name,
-      Status status,
       int index,
-      DateTime? startedAt,
-      DateTime? finishedAt,
+      List<String> children,
       DateTime? updatedAt,
       DateTime? createdAt});
 }
 
 /// @nodoc
-class _$TaskCopyWithImpl<$Res, $Val extends Task>
-    implements $TaskCopyWith<$Res> {
-  _$TaskCopyWithImpl(this._value, this._then);
+class _$ProjectCopyWithImpl<$Res, $Val extends Project>
+    implements $ProjectCopyWith<$Res> {
+  _$ProjectCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Task
+  /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? name = null,
-    Object? status = null,
     Object? index = null,
-    Object? startedAt = freezed,
-    Object? finishedAt = freezed,
+    Object? children = null,
     Object? updatedAt = freezed,
     Object? createdAt = freezed,
   }) {
@@ -80,22 +74,14 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as Status,
       index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
-      startedAt: freezed == startedAt
-          ? _value.startedAt
-          : startedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      finishedAt: freezed == finishedAt
-          ? _value.finishedAt
-          : finishedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      children: null == children
+          ? _value.children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -109,45 +95,42 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
 }
 
 /// @nodoc
-abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
-  factory _$$TaskImplCopyWith(
-          _$TaskImpl value, $Res Function(_$TaskImpl) then) =
-      __$$TaskImplCopyWithImpl<$Res>;
+abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
+  factory _$$ProjectImplCopyWith(
+          _$ProjectImpl value, $Res Function(_$ProjectImpl) then) =
+      __$$ProjectImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String? id,
       String name,
-      Status status,
       int index,
-      DateTime? startedAt,
-      DateTime? finishedAt,
+      List<String> children,
       DateTime? updatedAt,
       DateTime? createdAt});
 }
 
 /// @nodoc
-class __$$TaskImplCopyWithImpl<$Res>
-    extends _$TaskCopyWithImpl<$Res, _$TaskImpl>
-    implements _$$TaskImplCopyWith<$Res> {
-  __$$TaskImplCopyWithImpl(_$TaskImpl _value, $Res Function(_$TaskImpl) _then)
+class __$$ProjectImplCopyWithImpl<$Res>
+    extends _$ProjectCopyWithImpl<$Res, _$ProjectImpl>
+    implements _$$ProjectImplCopyWith<$Res> {
+  __$$ProjectImplCopyWithImpl(
+      _$ProjectImpl _value, $Res Function(_$ProjectImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Task
+  /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? name = null,
-    Object? status = null,
     Object? index = null,
-    Object? startedAt = freezed,
-    Object? finishedAt = freezed,
+    Object? children = null,
     Object? updatedAt = freezed,
     Object? createdAt = freezed,
   }) {
-    return _then(_$TaskImpl(
+    return _then(_$ProjectImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -156,22 +139,14 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as Status,
       index: null == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
-      startedAt: freezed == startedAt
-          ? _value.startedAt
-          : startedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      finishedAt: freezed == finishedAt
-          ? _value.finishedAt
-          : finishedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      children: null == children
+          ? _value._children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -186,17 +161,16 @@ class __$$TaskImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TaskImpl extends _Task {
-  const _$TaskImpl(
+class _$ProjectImpl extends _Project {
+  const _$ProjectImpl(
       {this.id,
       this.name = '',
-      this.status = Status.inbox,
       this.index = 9999999999,
-      this.startedAt,
-      this.finishedAt,
+      final List<String> children = const [],
       this.updatedAt,
       this.createdAt})
-      : super._();
+      : _children = children,
+        super._();
 
   @override
   final String? id;
@@ -205,14 +179,16 @@ class _$TaskImpl extends _Task {
   final String name;
   @override
   @JsonKey()
-  final Status status;
+  final int index;
+  final List<String> _children;
   @override
   @JsonKey()
-  final int index;
-  @override
-  final DateTime? startedAt;
-  @override
-  final DateTime? finishedAt;
+  List<String> get children {
+    if (_children is EqualUnmodifiableListView) return _children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_children);
+  }
+
   @override
   final DateTime? updatedAt;
   @override
@@ -220,22 +196,18 @@ class _$TaskImpl extends _Task {
 
   @override
   String toString() {
-    return 'Task(id: $id, name: $name, status: $status, index: $index, startedAt: $startedAt, finishedAt: $finishedAt, updatedAt: $updatedAt, createdAt: $createdAt)';
+    return 'Project(id: $id, name: $name, index: $index, children: $children, updatedAt: $updatedAt, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskImpl &&
+            other is _$ProjectImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.status, status) || other.status == status) &&
             (identical(other.index, index) || other.index == index) &&
-            (identical(other.startedAt, startedAt) ||
-                other.startedAt == startedAt) &&
-            (identical(other.finishedAt, finishedAt) ||
-                other.finishedAt == finishedAt) &&
+            const DeepCollectionEquality().equals(other._children, _children) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.createdAt, createdAt) ||
@@ -243,51 +215,45 @@ class _$TaskImpl extends _Task {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, status, index,
-      startedAt, finishedAt, updatedAt, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, name, index,
+      const DeepCollectionEquality().hash(_children), updatedAt, createdAt);
 
-  /// Create a copy of Task
+  /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
-      __$$TaskImplCopyWithImpl<_$TaskImpl>(this, _$identity);
+  _$$ProjectImplCopyWith<_$ProjectImpl> get copyWith =>
+      __$$ProjectImplCopyWithImpl<_$ProjectImpl>(this, _$identity);
 }
 
-abstract class _Task extends Task {
-  const factory _Task(
+abstract class _Project extends Project {
+  const factory _Project(
       {final String? id,
       final String name,
-      final Status status,
       final int index,
-      final DateTime? startedAt,
-      final DateTime? finishedAt,
+      final List<String> children,
       final DateTime? updatedAt,
-      final DateTime? createdAt}) = _$TaskImpl;
-  const _Task._() : super._();
+      final DateTime? createdAt}) = _$ProjectImpl;
+  const _Project._() : super._();
 
   @override
   String? get id;
   @override
   String get name;
   @override
-  Status get status;
-  @override
   int get index;
   @override
-  DateTime? get startedAt;
-  @override
-  DateTime? get finishedAt;
+  List<String> get children;
   @override
   DateTime? get updatedAt;
   @override
   DateTime? get createdAt;
 
-  /// Create a copy of Task
+  /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
+  _$$ProjectImplCopyWith<_$ProjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

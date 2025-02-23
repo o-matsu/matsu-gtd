@@ -78,12 +78,12 @@ class InboxScreen extends ConsumerWidget {
                 ),
                 title: TextFormField(
                   key: Key(task.id!),
-                  autofocus: task.title.isEmpty,
-                  initialValue: task.title,
+                  autofocus: task.name.isEmpty,
+                  initialValue: task.name,
                   onChanged: (value) {
-                    taskProvider.updateTitle(
+                    taskProvider.updateName(
                       task,
-                      title: value,
+                      name: value,
                     );
                   },
                   onFieldSubmitted: (value) {

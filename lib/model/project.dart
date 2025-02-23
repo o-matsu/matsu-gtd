@@ -1,33 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:matsu_gtd/model/status.dart';
+import 'package:matsu_gtd/model/task.dart';
 
-part 'task.freezed.dart';
+part 'project.freezed.dart';
 
 @freezed
-class Task with _$Task {
-  const Task._();
+class Project with _$Project {
+  const Project._();
 
-  const factory Task({
+  const factory Project({
     String? id,
     @Default('') String name,
-    @Default(Status.inbox) Status status,
     @Default(9999999999) int index,
-    DateTime? startedAt,
-    DateTime? finishedAt,
+    @Default([]) List<String> children,
     DateTime? updatedAt,
     DateTime? createdAt,
-  }) = _Task;
+  }) = _Project;
 
-  factory Task.fromFirebase(
+  factory Project.fromFirebase(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     _,
   ) {
     final data = snapshot.data();
     final pending = snapshot.metadata.hasPendingWrites;
-    return Task(
+    return Project(
       id: snapshot.id,
       name: data?['name'],
+      children: data?['children'],
       updatedAt: pending
           ? DateTime.now()
           : (data?['updatedAt'] as Timestamp?)?.toDate(),
@@ -39,11 +38,20 @@ class Task with _$Task {
 
   Map<String, dynamic> get toFirestore => {
         'name': name,
-        'status': status.name,
         'index': index,
+        'children': children,
         'updatedAt': FieldValue.serverTimestamp(),
         'createdAt': createdAt != null
             ? Timestamp.fromDate(createdAt!)
             : FieldValue.serverTimestamp(),
       };
+
+  factory Project.fromTask(
+    Task task,
+    _,
+  ) {
+    return Project(
+      name: task.name,
+    );
+  }
 }

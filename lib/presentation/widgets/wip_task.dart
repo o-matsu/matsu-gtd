@@ -66,7 +66,7 @@ class WipWatcher extends HookConsumerWidget {
                     child: ListTile(
                       tileColor: Theme.of(context).colorScheme.secondary,
                       title: Text(
-                        task.title,
+                        task.name,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
