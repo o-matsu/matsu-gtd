@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/controller/auth_controller.dart';
+import 'package:matsu_gtd/presentation/widgets/firestore_stream.dart';
 import 'package:matsu_gtd/presentation/widgets/wip_task.dart';
 
 class CommonLayout<T> extends ConsumerWidget {
@@ -40,21 +41,9 @@ class CommonLayout<T> extends ConsumerWidget {
           ];
         },
         body: WipWatcher(
-          child: StreamBuilder(
+          child: FirestoreStream(
             stream: stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                debugPrint(snapshot.error.toString());
-                return const Text('Something went wrong');
-              }
-
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Loading");
-              }
-              final docs = snapshot.data!.docs;
-
-              return builder(context, docs);
-            },
+            builder: builder,
           ),
         ),
       ),

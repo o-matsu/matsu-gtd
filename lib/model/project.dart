@@ -11,8 +11,6 @@ class Project with _$Project {
   const factory Project({
     String? id,
     @Default('') String name,
-    @Default(9999999999) int index,
-    @Default([]) List<String> children,
     DateTime? updatedAt,
     DateTime? createdAt,
   }) = _Project;
@@ -26,7 +24,6 @@ class Project with _$Project {
     return Project(
       id: snapshot.id,
       name: data?['name'],
-      // children: data?['children'],
       updatedAt: pending
           ? DateTime.now()
           : (data?['updatedAt'] as Timestamp?)?.toDate(),
@@ -38,8 +35,6 @@ class Project with _$Project {
 
   Map<String, dynamic> get toFirestore => {
         'name': name,
-        'index': index,
-        'children': children,
         'updatedAt': FieldValue.serverTimestamp(),
         'createdAt': createdAt != null
             ? Timestamp.fromDate(createdAt!)

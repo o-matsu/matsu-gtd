@@ -18,8 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Project {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  int get index => throw _privateConstructorUsedError;
-  List<String> get children => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
@@ -35,12 +33,7 @@ abstract class $ProjectCopyWith<$Res> {
       _$ProjectCopyWithImpl<$Res, Project>;
   @useResult
   $Res call(
-      {String? id,
-      String name,
-      int index,
-      List<String> children,
-      DateTime? updatedAt,
-      DateTime? createdAt});
+      {String? id, String name, DateTime? updatedAt, DateTime? createdAt});
 }
 
 /// @nodoc
@@ -60,8 +53,6 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
   $Res call({
     Object? id = freezed,
     Object? name = null,
-    Object? index = null,
-    Object? children = null,
     Object? updatedAt = freezed,
     Object? createdAt = freezed,
   }) {
@@ -74,14 +65,6 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      index: null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-      children: null == children
-          ? _value.children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -102,12 +85,7 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? id,
-      String name,
-      int index,
-      List<String> children,
-      DateTime? updatedAt,
-      DateTime? createdAt});
+      {String? id, String name, DateTime? updatedAt, DateTime? createdAt});
 }
 
 /// @nodoc
@@ -125,8 +103,6 @@ class __$$ProjectImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = null,
-    Object? index = null,
-    Object? children = null,
     Object? updatedAt = freezed,
     Object? createdAt = freezed,
   }) {
@@ -139,14 +115,6 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      index: null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-      children: null == children
-          ? _value._children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -162,15 +130,8 @@ class __$$ProjectImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProjectImpl extends _Project {
-  const _$ProjectImpl(
-      {this.id,
-      this.name = '',
-      this.index = 9999999999,
-      final List<String> children = const [],
-      this.updatedAt,
-      this.createdAt})
-      : _children = children,
-        super._();
+  const _$ProjectImpl({this.id, this.name = '', this.updatedAt, this.createdAt})
+      : super._();
 
   @override
   final String? id;
@@ -178,25 +139,13 @@ class _$ProjectImpl extends _Project {
   @JsonKey()
   final String name;
   @override
-  @JsonKey()
-  final int index;
-  final List<String> _children;
-  @override
-  @JsonKey()
-  List<String> get children {
-    if (_children is EqualUnmodifiableListView) return _children;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_children);
-  }
-
-  @override
   final DateTime? updatedAt;
   @override
   final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'Project(id: $id, name: $name, index: $index, children: $children, updatedAt: $updatedAt, createdAt: $createdAt)';
+    return 'Project(id: $id, name: $name, updatedAt: $updatedAt, createdAt: $createdAt)';
   }
 
   @override
@@ -206,8 +155,6 @@ class _$ProjectImpl extends _Project {
             other is _$ProjectImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.index, index) || other.index == index) &&
-            const DeepCollectionEquality().equals(other._children, _children) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.createdAt, createdAt) ||
@@ -215,8 +162,7 @@ class _$ProjectImpl extends _Project {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, index,
-      const DeepCollectionEquality().hash(_children), updatedAt, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, name, updatedAt, createdAt);
 
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
@@ -231,8 +177,6 @@ abstract class _Project extends Project {
   const factory _Project(
       {final String? id,
       final String name,
-      final int index,
-      final List<String> children,
       final DateTime? updatedAt,
       final DateTime? createdAt}) = _$ProjectImpl;
   const _Project._() : super._();
@@ -241,10 +185,6 @@ abstract class _Project extends Project {
   String? get id;
   @override
   String get name;
-  @override
-  int get index;
-  @override
-  List<String> get children;
   @override
   DateTime? get updatedAt;
   @override

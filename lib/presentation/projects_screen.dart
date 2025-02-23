@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/data/project_repository.dart';
 import 'package:matsu_gtd/data/task_repository.dart';
 import 'package:matsu_gtd/model/project.dart';
+import 'package:matsu_gtd/model/status.dart';
+import 'package:matsu_gtd/model/task.dart';
+import 'package:matsu_gtd/presentation/inbox_screen.dart';
+import 'package:matsu_gtd/presentation/widgets/firestore_stream.dart';
 import 'package:matsu_gtd/presentation/widgets/layout.dart';
 import 'package:matsu_gtd/presentation/widgets/navigation_bar.dart';
 
@@ -24,9 +29,9 @@ class ProjectsScreen extends ConsumerWidget {
           itemCount: docs.length,
           itemBuilder: (context, index) {
             final doc = docs[index];
-            final task = doc.data();
+            final project = doc.data();
             return Slidable(
-              key: ValueKey(task.id!),
+              key: ValueKey(project.id!),
               startActionPane: ActionPane(
                 motion: const ScrollMotion(),
                 extentRatio: 0.2,
@@ -87,12 +92,48 @@ class ProjectsScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 8,
+              child: ExpansionTile(
+                trailing: IconButton(
+                  onPressed: () {
+                    taskProvider.add(Task(projectId: project.id!));
+                  },
+                  icon: Icon(Icons.add),
                 ),
-                title: Text(task.name),
+                title: Text(project.name),
+                children: [
+                  FirestoreStream<Task>(
+                    stream: taskProvider
+                        .snapshots(Status.inbox), // TODO: 全status取得する
+                    builder: (context, taskDocs) {
+                      return ReorderableListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        buildDefaultDragHandles: false,
+                        padding: EdgeInsets.zero,
+                        itemCount: taskDocs.length,
+                        itemBuilder: (context, index) {
+                          final taskDoc = taskDocs[index];
+                          final task = taskDoc.data();
+
+                          return InboxTile(
+                            key: Key(task.id!),
+                            index: index,
+                            task: task,
+                          );
+                        },
+                        onReorder: (int oldIndex, int newIndex) async {
+                          if (oldIndex < newIndex) {
+                            newIndex -= 1;
+                          }
+                          final QueryDocumentSnapshot<Task> tmp =
+                              taskDocs.removeAt(oldIndex);
+                          taskDocs.insert(newIndex, tmp);
+                          await taskProvider.updateIndex(taskDocs);
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
             );
           },

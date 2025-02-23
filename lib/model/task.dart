@@ -12,6 +12,7 @@ class Task with _$Task {
     String? id,
     @Default('') String name,
     @Default(Status.inbox) Status status,
+    String? projectId,
     @Default(9999999999) int index,
     DateTime? startedAt,
     DateTime? finishedAt,
@@ -28,6 +29,7 @@ class Task with _$Task {
     return Task(
       id: snapshot.id,
       name: data?['name'],
+      projectId: data?['projectId'],
       updatedAt: pending
           ? DateTime.now()
           : (data?['updatedAt'] as Timestamp?)?.toDate(),
@@ -40,6 +42,7 @@ class Task with _$Task {
   Map<String, dynamic> get toFirestore => {
         'name': name,
         'status': status.name,
+        'projectId': projectId,
         'index': index,
         'updatedAt': FieldValue.serverTimestamp(),
         'createdAt': createdAt != null

@@ -25,11 +25,7 @@ class ProjectRepository {
   final FirebaseFirestore firestore;
   final CollectionReference<Project> _collection;
 
-  Query<Project> get _ordered => _collection
-      .orderBy(
-        'index',
-      )
-      .orderBy('createdAt');
+  Query<Project> get _ordered => _collection.orderBy('createdAt');
   DocumentReference<Project> _doc(String id) => _collection.doc(id);
 
   Future<void> updateName(Project task, {required String name}) =>
@@ -42,19 +38,6 @@ class ProjectRepository {
   Stream<QuerySnapshot<Project>> snapshots() => _ordered.snapshots();
 
   Future<DocumentReference<Project>> add(Project data) => _collection.add(data);
-
-  Future<void> updateIndex(List<QueryDocumentSnapshot<Task>> tasks) async {
-    final batch = firestore.batch();
-    tasks.asMap().forEach((index, todo) {
-      batch.update(
-        _doc(todo.id),
-        {
-          "index": index,
-        },
-      );
-    });
-    return batch.commit();
-  }
 }
 
 @riverpod
