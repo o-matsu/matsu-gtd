@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/data/project_repository.dart';
 import 'package:matsu_gtd/data/task_repository.dart';
 import 'package:matsu_gtd/model/project.dart';
-import 'package:matsu_gtd/model/status.dart';
 import 'package:matsu_gtd/model/task.dart';
 import 'package:matsu_gtd/presentation/inbox_screen.dart';
 import 'package:matsu_gtd/presentation/widgets/firestore_stream.dart';
@@ -23,13 +22,12 @@ class ProjectsScreen extends ConsumerWidget {
     return CommonLayout<Project>(
       titleText: NavigationItem.toDo.name,
       stream: projectProvider.snapshots(),
-      builder: (context, docs) {
+      builder: (context, projectDocs) {
         return ListView.separated(
           padding: EdgeInsets.zero,
-          itemCount: docs.length,
+          itemCount: projectDocs.length,
           itemBuilder: (context, index) {
-            final doc = docs[index];
-            final project = doc.data();
+            final project = projectDocs[index].data();
             return Slidable(
               key: ValueKey(project.id!),
               startActionPane: ActionPane(
@@ -103,7 +101,7 @@ class ProjectsScreen extends ConsumerWidget {
                 children: [
                   FirestoreStream<Task>(
                     stream: taskProvider
-                        .snapshots(Status.inbox), // TODO: 全status取得する
+                        .snapshotsByProject(project), // TODO: 全status取得する
                     builder: (context, taskDocs) {
                       return ReorderableListView.builder(
                         shrinkWrap: true,
@@ -112,8 +110,7 @@ class ProjectsScreen extends ConsumerWidget {
                         padding: EdgeInsets.zero,
                         itemCount: taskDocs.length,
                         itemBuilder: (context, index) {
-                          final taskDoc = taskDocs[index];
-                          final task = taskDoc.data();
+                          final task = taskDocs[index].data();
 
                           return InboxTile(
                             key: Key(task.id!),

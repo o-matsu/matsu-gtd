@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:matsu_gtd/core/firebase/auth_repository.dart';
 import 'package:matsu_gtd/core/firebase/firestore_repository.dart';
+import 'package:matsu_gtd/model/project.dart';
 import 'package:matsu_gtd/model/status.dart';
 import 'package:matsu_gtd/model/task.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,8 +11,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'task_repository.g.dart';
 
 class TaskRepository {
-  TaskRepository(this.user, this.firestore)
-      : _collection = firestore
+  TaskRepository(this.user, this._firestore)
+      : _collection = _firestore
             .collection('users')
             .doc(user.uid)
             .collection('tasks')
@@ -21,15 +22,20 @@ class TaskRepository {
             );
 
   final User user;
-  final FirebaseFirestore firestore;
+  final FirebaseFirestore _firestore;
   final CollectionReference<Task> _collection;
 
-  Query<Task> _whereStatus(Status status) => _collection
-      .where("status", isEqualTo: status.name)
+  Query<Task> _whereStatus(Status status) =>
+      _ordered.where("status", isEqualTo: status.name);
+  Query<Task> _whereProject(Project project) =>
+      _ordered.where("projectId", isEqualTo: project.id);
+
+  Query<Task> get _ordered => _collection
       .orderBy(
         'index',
       )
       .orderBy('createdAt');
+
   DocumentReference<Task> _doc(String id) => _collection.doc(id);
 
   Future<void> updateName(Task task, {required String name}) =>
@@ -43,13 +49,15 @@ class TaskRepository {
 
   Future<void> delete({required String id}) => _doc(id).delete();
 
-  Stream<QuerySnapshot<Task>> snapshots(Status status) =>
+  Stream<QuerySnapshot<Task>> snapshotsByStatus(Status status) =>
       _whereStatus(status).snapshots();
+  Stream<QuerySnapshot<Task>> snapshotsByProject(Project project) =>
+      _whereProject(project).snapshots();
 
   Future<DocumentReference<Task>> add(Task data) => _collection.add(data);
 
   Future<void> updateIndex(List<QueryDocumentSnapshot<Task>> tasks) async {
-    final batch = firestore.batch();
+    final batch = _firestore.batch();
     tasks.asMap().forEach((index, todo) {
       batch.update(
         _doc(todo.id),

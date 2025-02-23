@@ -15,7 +15,7 @@ class WipWatcher extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final taskProvider = ref.watch(taskRepositoryProvider);
-    final wipTask = taskProvider.snapshots(Status.wip);
+    final wipTask = taskProvider.snapshotsByStatus(Status.wip);
 
     return Column(
       children: [

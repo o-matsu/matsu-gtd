@@ -19,7 +19,7 @@ class ToDoScreen extends ConsumerWidget {
 
     return CommonLayout<Task>(
       titleText: NavigationItem.toDo.name,
-      stream: taskProvider.snapshots(Status.actionable),
+      stream: taskProvider.snapshotsByStatus(Status.actionable),
       builder: (context, docs) {
         return ListView.separated(
           padding: EdgeInsets.zero,

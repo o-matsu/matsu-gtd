@@ -17,7 +17,7 @@ class InboxScreen extends ConsumerWidget {
 
     return CommonLayout<Task>(
       titleText: NavigationItem.inbox.name,
-      stream: taskProvider.snapshots(Status.inbox),
+      stream: taskProvider.snapshotsByStatus(Status.inbox),
       builder: (context, docs) {
         return ReorderableListView.builder(
           buildDefaultDragHandles: false,
@@ -120,23 +120,27 @@ class InboxTile extends ConsumerWidget {
                 ],
               )
             : null,
-        title: TextFormField(
-          key: Key(task.id!),
-          autofocus: task.name.isEmpty,
-          initialValue: task.name,
-          onChanged: (value) {
-            taskProvider.updateName(
-              task,
-              name: value,
-            );
+        title: Focus(
+          onFocusChange: (hasFocus) {
+            if (hasFocus || task.name.isNotEmpty) return;
+            taskProvider.delete(id: task.id!);
           },
-          onFieldSubmitted: (value) {
-            if (value.isEmpty) {
-              taskProvider.delete(id: task.id!);
-            } else {
-              taskProvider.add(Task());
-            }
-          },
+          child: TextFormField(
+            key: Key(task.id!),
+            autofocus: task.name.isEmpty,
+            initialValue: task.name,
+            onChanged: (value) {
+              taskProvider.updateName(
+                task,
+                name: value,
+              );
+            },
+            onFieldSubmitted: (value) {
+              if (value.isNotEmpty) {
+                taskProvider.add(Task());
+              }
+            },
+          ),
         ),
       ),
     );
