@@ -10,7 +10,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'task_repository.g.dart';
 
 class TaskRepository {
-  TaskRepository(this.user, FirebaseFirestore firestore)
+  TaskRepository(this.user, this.firestore)
       : _collection = firestore
             .collection('users')
             .doc(user.uid)
@@ -21,10 +21,15 @@ class TaskRepository {
             );
 
   final User user;
+  final FirebaseFirestore firestore;
   final CollectionReference<Task> _collection;
 
-  Query<Task> _whereStatus(Status status) =>
-      _collection.where("status", isEqualTo: status.name).orderBy('createdAt');
+  Query<Task> _whereStatus(Status status) => _collection
+      .where("status", isEqualTo: status.name)
+      .orderBy(
+        'index',
+      )
+      .orderBy('createdAt');
   DocumentReference<Task> _doc(String id) => _collection.doc(id);
 
   Future<void> updateTitle(Task task, {required String title}) =>
@@ -42,6 +47,19 @@ class TaskRepository {
       _whereStatus(status).snapshots();
 
   Future<DocumentReference<Task>> add(Task data) => _collection.add(data);
+
+  Future<void> updateIndex(List<QueryDocumentSnapshot<Task>> tasks) async {
+    final batch = firestore.batch();
+    tasks.asMap().forEach((index, todo) {
+      batch.update(
+        _doc(todo.id),
+        {
+          "index": index,
+        },
+      );
+    });
+    return batch.commit();
+  }
 }
 
 @riverpod

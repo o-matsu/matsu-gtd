@@ -19,6 +19,7 @@ mixin _$Task {
   String? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
   DateTime? get startedAt => throw _privateConstructorUsedError;
   DateTime? get finishedAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -39,6 +40,7 @@ abstract class $TaskCopyWith<$Res> {
       {String? id,
       String title,
       Status status,
+      int index,
       DateTime? startedAt,
       DateTime? finishedAt,
       DateTime? updatedAt,
@@ -63,6 +65,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? id = freezed,
     Object? title = null,
     Object? status = null,
+    Object? index = null,
     Object? startedAt = freezed,
     Object? finishedAt = freezed,
     Object? updatedAt = freezed,
@@ -81,6 +84,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      index: null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
       startedAt: freezed == startedAt
           ? _value.startedAt
           : startedAt // ignore: cast_nullable_to_non_nullable
@@ -112,6 +119,7 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       {String? id,
       String title,
       Status status,
+      int index,
       DateTime? startedAt,
       DateTime? finishedAt,
       DateTime? updatedAt,
@@ -133,6 +141,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? title = null,
     Object? status = null,
+    Object? index = null,
     Object? startedAt = freezed,
     Object? finishedAt = freezed,
     Object? updatedAt = freezed,
@@ -151,6 +160,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      index: null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
       startedAt: freezed == startedAt
           ? _value.startedAt
           : startedAt // ignore: cast_nullable_to_non_nullable
@@ -178,6 +191,7 @@ class _$TaskImpl extends _Task {
       {this.id,
       this.title = '',
       this.status = Status.inbox,
+      this.index = 9999999999,
       this.startedAt,
       this.finishedAt,
       this.updatedAt,
@@ -193,6 +207,9 @@ class _$TaskImpl extends _Task {
   @JsonKey()
   final Status status;
   @override
+  @JsonKey()
+  final int index;
+  @override
   final DateTime? startedAt;
   @override
   final DateTime? finishedAt;
@@ -203,7 +220,7 @@ class _$TaskImpl extends _Task {
 
   @override
   String toString() {
-    return 'Task(id: $id, title: $title, status: $status, startedAt: $startedAt, finishedAt: $finishedAt, updatedAt: $updatedAt, createdAt: $createdAt)';
+    return 'Task(id: $id, title: $title, status: $status, index: $index, startedAt: $startedAt, finishedAt: $finishedAt, updatedAt: $updatedAt, createdAt: $createdAt)';
   }
 
   @override
@@ -214,6 +231,7 @@ class _$TaskImpl extends _Task {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.index, index) || other.index == index) &&
             (identical(other.startedAt, startedAt) ||
                 other.startedAt == startedAt) &&
             (identical(other.finishedAt, finishedAt) ||
@@ -225,8 +243,8 @@ class _$TaskImpl extends _Task {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, status, startedAt,
-      finishedAt, updatedAt, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, title, status, index,
+      startedAt, finishedAt, updatedAt, createdAt);
 
   /// Create a copy of Task
   /// with the given fields replaced by the non-null parameter values.
@@ -242,6 +260,7 @@ abstract class _Task extends Task {
       {final String? id,
       final String title,
       final Status status,
+      final int index,
       final DateTime? startedAt,
       final DateTime? finishedAt,
       final DateTime? updatedAt,
@@ -254,6 +273,8 @@ abstract class _Task extends Task {
   String get title;
   @override
   Status get status;
+  @override
+  int get index;
   @override
   DateTime? get startedAt;
   @override

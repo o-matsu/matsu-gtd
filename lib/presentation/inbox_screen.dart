@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,7 +19,8 @@ class InboxScreen extends ConsumerWidget {
       titleText: NavigationItem.inbox.name,
       stream: taskProvider.snapshots(Status.inbox),
       builder: (context, docs) {
-        return ListView.separated(
+        return ReorderableListView.builder(
+          buildDefaultDragHandles: false,
           padding: EdgeInsets.zero,
           itemCount: docs.length,
           itemBuilder: (context, index) {
@@ -65,9 +67,14 @@ class InboxScreen extends ConsumerWidget {
                 ],
               ),
               child: ListTile(
+                key: Key(task.id!),
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 8,
+                ),
+                leading: ReorderableDragStartListener(
+                  index: index,
+                  child: const Icon(Icons.drag_handle),
                 ),
                 title: TextFormField(
                   key: Key(task.id!),
@@ -90,8 +97,20 @@ class InboxScreen extends ConsumerWidget {
               ),
             );
           },
-          separatorBuilder: (context, index) {
-            return Divider(height: 0);
+          onReorder: (int oldIndex, int newIndex) async {
+            if (oldIndex < newIndex) {
+              newIndex -= 1;
+            }
+            // final Todo todo = todayTodo.removeAt(oldIndex);
+            // todayTodo.insert(newIndex, todo);
+            final QueryDocumentSnapshot<Task> tmp = docs.removeAt(oldIndex);
+            docs.insert(newIndex, tmp);
+
+            await taskProvider.updateIndex(docs);
+
+            // await todoRepo.updateIndex(
+            //   todos: todayTodo,
+            // );
           },
         );
       },

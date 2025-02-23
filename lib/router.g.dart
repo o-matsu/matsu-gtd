@@ -26,7 +26,7 @@ RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
           navigatorKey: ToDoBranch.$navigatorKey,
           routes: [
             GoRouteData.$route(
-              path: '/todo',
+              path: '/toDo',
               factory: $ToDoRouteExtension._fromState,
             ),
           ],
@@ -60,7 +60,7 @@ extension $ToDoRouteExtension on ToDoRoute {
   static ToDoRoute _fromState(GoRouterState state) => const ToDoRoute();
 
   String get location => GoRouteData.$location(
-        '/todo',
+        '/toDo',
       );
 
   void go(BuildContext context) => context.go(location);

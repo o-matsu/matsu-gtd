@@ -12,6 +12,7 @@ class Task with _$Task {
     String? id,
     @Default('') String title,
     @Default(Status.inbox) Status status,
+    @Default(9999999999) int index,
     DateTime? startedAt,
     DateTime? finishedAt,
     DateTime? updatedAt,
@@ -39,6 +40,7 @@ class Task with _$Task {
   Map<String, dynamic> get toFirestore => {
         'title': title,
         'status': status.name,
+        'index': index,
         'updatedAt': FieldValue.serverTimestamp(),
         'createdAt': createdAt != null
             ? Timestamp.fromDate(createdAt!)
